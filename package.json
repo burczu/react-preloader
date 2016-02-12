@@ -1,0 +1,32 @@
+{
+  "name": "react-preloader",
+  "version": "1.0.0",
+  "description": "React component which shows preloader (or whatever you want) until all images are loaded",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burczu/react-preloader.git"
+  },
+  "keywords": [
+    "react",
+    "react-preloader"
+  ],
+  "author": "Bartłomiej Dybowski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/burczu/react-preloader/issues"
+  },
+  "homepage": "https://github.com/burczu/react-preloader#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel": "^6.5.1",
+    "babel-core": "^6.5.1",
+    "babel-preset-es2015": "^6.5.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "path": "^0.12.7"
+  }
+}
