@@ -1,4 +1,5 @@
 /node_modules/
 /.eslintrc
 /.babelrc
+/.idea
 /src/

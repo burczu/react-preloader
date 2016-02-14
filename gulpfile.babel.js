@@ -5,14 +5,17 @@ import run from 'gulp-run';
 import webpack from 'webpack';
 import gulpUtil from 'gulp-util';
 
-gulp.task('default', ['eslint', 'watch', 'npm_pack']); // no-udef
+gulp.task('default', ['watch']); // no-udef
 
 gulp.task('webpack', done => {
   webpack({
     entry: path.join(__dirname, 'src', 'index.js'), //eslint-disable-line no-undef
     output: {
-      path: path.join(__dirname, 'build'), //eslint-disable-line no-undef
-      filename: 'index.js'
+      path: path.join(__dirname, 'lib'), //eslint-disable-line no-undef
+      filename: 'index.js',
+      library: 'ReactPreloader',
+      libraryTarget: 'umd',
+      target: 'web'
     },
     externals: ['React', { react: 'React' }],
     module: {
@@ -46,13 +49,13 @@ gulp.task('webpack', done => {
   });
 });
 
-gulp.task('watch', () => {
-  let files = ['**/*.js', '!node_modules/**', '!build/**'];
+gulp.task('watch', ['eslint'], () => {
+  let files = ['**/*.js', '!node_modules/**', '!lib/**'];
   gulp.watch(files, ['eslint', 'npm_pack']);
 });
 
-gulp.task('eslint', () => {
-  return gulp.src(['**/*.js', '!node_modules/**', '!build/**'])
+gulp.task('eslint', ['npm_pack'], () => {
+  return gulp.src(['**/*.js', '!node_modules/**', '!lib/**'])
     .pipe(eslint())
     .pipe(eslint.format());
 });

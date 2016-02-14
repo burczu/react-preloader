@@ -1,6 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 
-class ReactPreloader extends Component {
+const { PropTypes } = React;
+
+class ReactPreloader extends React.Component {
   static propTypes = {
     children: PropTypes.element,
     onLoaded: PropTypes.func
