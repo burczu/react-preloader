@@ -17,7 +17,7 @@ gulp.task('webpack', done => {
       libraryTarget: 'umd',
       target: 'web'
     },
-    externals: ['React', { react: 'React' }],
+    externals: ['react', { react: 'react' }],
     module: {
       loaders: [
         {
