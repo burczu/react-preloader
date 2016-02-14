@@ -1,24 +1,62 @@
 import gulp from 'gulp';
-import rename from 'gulp-rename';
 import path from 'path';
-import babel from 'gulp-babel';
-import uglify from 'gulp-uglify';
 import eslint from 'gulp-eslint';
+import run from 'gulp-run';
+import webpack from 'webpack';
+import gulpUtil from 'gulp-util';
 
-gulp.task('default', [ 'eslint', 'watch' ], () => {
-  return gulp.src(path.join('src', 'index.js'))
-    .pipe(babel())
-    .pipe(uglify())
-    .pipe(rename('react-preloader.js'))
-    .pipe(gulp.dest('standalone'));
+gulp.task('default', ['eslint', 'watch', 'npm_pack']); // no-udef
+
+gulp.task('webpack', done => {
+  webpack({
+    entry: path.join(__dirname, 'src', 'index.js'), //eslint-disable-line no-undef
+    output: {
+      path: path.join(__dirname, 'build'), //eslint-disable-line no-undef
+      filename: 'index.js'
+    },
+    externals: ['React', { react: 'React' }],
+    module: {
+      loaders: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'babel',
+          query: {
+            presets: ['es2015', 'react', 'stage-0']
+          }
+        }
+      ]
+    }
+  }, error => {
+    if (error) {
+      let pluginError = new gulpUtil.PluginError('webpack', error);
+
+      if (done) {
+        done(pluginError);
+      } else {
+        gulpUtil.log('[webpack]', pluginError);
+      }
+
+      return;
+    }
+
+    if (done) {
+      done();
+    }
+  });
 });
 
 gulp.task('watch', () => {
-  gulp.watch('src/*.js', [ 'eslint' ]);
+  let files = ['**/*.js', '!node_modules/**', '!build/**'];
+  gulp.watch(files, ['eslint', 'npm_pack']);
 });
 
 gulp.task('eslint', () => {
-  return gulp.src(['src/*.js'])
+  return gulp.src(['**/*.js', '!node_modules/**', '!build/**'])
     .pipe(eslint())
     .pipe(eslint.format());
+});
+
+gulp.task('npm_pack', ['webpack'], () => {
+  run('npm pack').exec();
 });
