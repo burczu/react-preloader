@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/burczu/react-preloader#readme",
   "dependencies": {
+    "classnames": "^2.2.3",
     "eslint": "^2.0.0"
   },
   "peerDependencies": {
