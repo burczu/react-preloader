@@ -5,7 +5,7 @@ import run from 'gulp-run';
 import webpack from 'webpack';
 import gulpUtil from 'gulp-util';
 
-gulp.task('default', ['watch']); // no-udef
+gulp.task('default', ['watch']);
 
 gulp.task('webpack', done => {
   webpack({
